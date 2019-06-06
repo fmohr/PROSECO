@@ -299,9 +299,7 @@ public class InterviewController {
 	@ResponseBody
 	public ResponseEntity<Object> postCandidateFoundEvent(@PathVariable("id") final String id, @RequestBody final StrategyCandidateFoundEvent e) {
 		final Map<String, Object> result = new HashMap<>();
-		if (logger.isDebugEnabled()) {
-			logger.debug("Received candidate from strategy {}:%n {}", id, e);
-		}
+		logger.debug("Received candidate from strategy {}:%n {}", id, e);
 		result.put(STATUS, this.datastore.put(id, e));
 		return new ResponseEntity<>(result, HttpStatus.OK);
 	}

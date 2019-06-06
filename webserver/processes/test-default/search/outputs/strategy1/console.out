@@ -1,0 +1,14 @@
+
+C:\Users\Kadiray\work_proseco_fork\PROSECO\core>echo Strategy  1>>C:\Users\Kadiray\work_proseco_fork\PROSECO\core\processes\test-e1a393f6fe/test.out 
+
+C:\Users\Kadiray\work_proseco_fork\PROSECO\core>echo file:C:\Users\Kadiray\work_proseco_fork\PROSECO\core\domains\test\prototypes\test\strategies\strategy1\run.bat  1>>C:\Users\Kadiray\work_proseco_fork\PROSECO\core\processes\test-e1a393f6fe/test.out 
+
+C:\Users\Kadiray\work_proseco_fork\PROSECO\core>echo param1:C:\Users\Kadiray\work_proseco_fork\PROSECO\core\processes\test-e1a393f6fe  1>>C:\Users\Kadiray\work_proseco_fork\PROSECO\core\processes\test-e1a393f6fe/test.out 
+
+C:\Users\Kadiray\work_proseco_fork\PROSECO\core>echo param2:C:\Users\Kadiray\work_proseco_fork\PROSECO\core\processes\test-e1a393f6fe\search\inputs  1>>C:\Users\Kadiray\work_proseco_fork\PROSECO\core\processes\test-e1a393f6fe/test.out 
+
+C:\Users\Kadiray\work_proseco_fork\PROSECO\core>echo param3:C:\Users\Kadiray\work_proseco_fork\PROSECO\core\processes\test-e1a393f6fe\search\outputs\strategy1  1>>C:\Users\Kadiray\work_proseco_fork\PROSECO\core\processes\test-e1a393f6fe/test.out 
+
+C:\Users\Kadiray\work_proseco_fork\PROSECO\core>echo param4:945  1>>C:\Users\Kadiray\work_proseco_fork\PROSECO\core\processes\test-e1a393f6fe/test.out 
+
+C:\Users\Kadiray\work_proseco_fork\PROSECO\core>echo 1.0  1>C:\Users\Kadiray\work_proseco_fork\PROSECO\core\processes\test-e1a393f6fe\search\outputs\strategy1/score 

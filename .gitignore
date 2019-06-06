@@ -65,8 +65,10 @@ data/stored
 /*.jar
 /.project
 /webserver/.project
-/webserver/domains/
-/webserver/processes/
+/webserver/domains/*
+!/webserver/domains/test
+/webserver/processes/*
+!/webserver/processes/test-default
 /webserver/build/
 /commons/build/
 /commons/.project

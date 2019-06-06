@@ -17,7 +17,7 @@ public class PROSECOSolutionTest {
 		solution.setProcessId("test-id");
 		assertEquals("test-id", solution.getProcessId());
 		solution.setWinningScore(1.0);
-		assertEquals(new Double(1.0), solution.getWinningScore());
+		assertEquals(Double.valueOf(1.0), solution.getWinningScore());
 		solution.setWinningStrategyId("strategy1");
 		assertEquals("strategy1", solution.getWinningStrategyId());
 		solution.setWinningStrategyFolder(new File("winningFolder"));
