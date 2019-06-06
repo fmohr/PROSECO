@@ -29,6 +29,12 @@ public class SerializationUtil {
 	private SerializationUtil() {
 	}
 
+	/**
+	 * Write {@link InterviewFillout} object as json to given file
+	 *
+	 * @param file file to store json
+	 * @param interview object to write to file
+	 */
 	public static void writeAsJSON(final File file, final InterviewFillout interview) {
 		final ObjectMapper mapper = new ObjectMapper();
 		try {
@@ -45,6 +51,12 @@ public class SerializationUtil {
 		logger.info("File exists: {}", fileExists);
 	}
 
+	/**
+	 * Read {@link InterviewFillout} object from the given file.
+	 *
+	 * @param file file to read json object
+	 * @return {@link InterviewFillout} object
+	 */
 	public static InterviewFillout readAsJSON(final File file) {
 		InterviewFillout interview = null;
 		final ObjectMapper mapper = new ObjectMapper();
@@ -56,6 +68,12 @@ public class SerializationUtil {
 		return interview;
 	}
 
+	/**
+	 * Write {@link Interview} object to given file with java serialization
+	 *
+	 * @param path path to store the object
+	 * @param interview object to write to file
+	 */
 	public static void write(final String path, final Interview interview) {
 		final String filePath = path + "interview_state";
 		try (FileOutputStream f = new FileOutputStream(new File(filePath)); ObjectOutputStream o = new ObjectOutputStream(f)) {
@@ -65,6 +83,12 @@ public class SerializationUtil {
 		}
 	}
 
+	/**
+	 * Read {@link Interview} object from given file path
+	 * 
+	 * @param path path of file that contains Interview object
+	 * @return an instance of {@link Interview}
+	 */
 	public static Interview read(final String path) {
 		final String filePath = path + "interview_state";
 		Interview interview = null;

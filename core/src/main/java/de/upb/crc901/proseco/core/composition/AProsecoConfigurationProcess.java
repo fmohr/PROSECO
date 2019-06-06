@@ -404,7 +404,7 @@ public abstract class AProsecoConfigurationProcess implements ProcessController 
 
 	}
 
-	public void createNewForConfig(final String processId, final PROSECOConfig config) throws ProcessIdAlreadyExistsException, InvalidStateTransitionException {
+	protected void createNewForConfig(final String processId, final PROSECOConfig config) throws ProcessIdAlreadyExistsException, InvalidStateTransitionException {
 		if (processId != null) {
 			final File processFolder = new File(config.getDirectoryForProcesses() + File.separator + processId);
 			if (processFolder.exists()) {

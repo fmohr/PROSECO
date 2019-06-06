@@ -87,10 +87,8 @@ public class Select extends UIElement {
 			final Select mObj = (Select) obj;
 			if (this.options != null) {
 				return this.options.equals(mObj.getOptions());
-			} else if (mObj.getOptions() == null) {
-				return true;
 			} else {
-				return false;
+				return mObj.getOptions() == null;
 			}
 		}
 	}
