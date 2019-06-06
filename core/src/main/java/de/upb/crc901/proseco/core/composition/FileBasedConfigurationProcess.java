@@ -52,7 +52,7 @@ public class FileBasedConfigurationProcess extends AProsecoConfigurationProcess 
 	@Override
 	public PROSECOProcessEnvironment getProcessEnvironment() throws InvalidStateTransitionException {
 		if (super.getProcessState() == EProcessState.INIT || super.getProcessState() == EProcessState.CREATED) {
-			throw new InvalidStateTransitionException();
+			throw new InvalidStateTransitionException(String.format("CurrentState: %s", this.getProcessState()));
 		}
 		return this.processEnvironment;
 	}

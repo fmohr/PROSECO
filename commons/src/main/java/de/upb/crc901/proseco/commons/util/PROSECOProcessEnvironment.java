@@ -92,9 +92,8 @@ public class PROSECOProcessEnvironment {
 
 		/* Figure out what operating system PROSECO is running in. */
 		this.os = (SystemUtils.IS_OS_WINDOWS ? OperatingSystem.WINDOWS : OperatingSystem.NON_WINDOWS);
-		if (L.isDebugEnabled()) {
-			L.debug("Detected {} operating system.", this.os.name());
-		}
+		final String osName = this.os.name();
+		L.debug("Detected {} operating system.", osName);
 
 		/* read PROSECO configuration and configure process */
 		final File prosecoConfigFile = processConfig.getProsecoConfigFile().isAbsolute() ? processConfig.getProsecoConfigFile() : new File(processFolder + File.separator + processConfig.getProsecoConfigFile());

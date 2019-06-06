@@ -1,6 +1,7 @@
 package de.upb.crc901.proseco.commons.html.test;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -12,17 +13,23 @@ import de.upb.crc901.proseco.commons.html.Input;
 public class InputTest {
 
 	@Test
+	public void equalsTest() {
+		final Input input1 = new Input();
+		final Input input2 = new Input();
+		assertTrue(input1.equals(input2));
+	}
+
+	@Test
 	public void toHTMLTest() {
-		Map<String, String> attributes = new HashMap<>();
+		final Map<String, String> attributes = new HashMap<>();
 		attributes.put("name", "inputName");
 		attributes.put("type", "text");
-		Input input = new Input(null, attributes);
+		final Input input = new Input(null, attributes);
 
-		String actual = input.toHTML();
-		String expected = "<input name=\"response\" type=\"text\"></input>";
+		final String actual = input.toHTML();
+		final String expected = "<input name=\"response\" type=\"text\"></input>";
 
 		assertEquals(expected, actual);
-
 	}
 
 }

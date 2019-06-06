@@ -29,7 +29,7 @@ public abstract class UIElement implements Serializable {
 		return this.tag;
 	}
 
-	protected void setTag(final String tag) {
+	public void setTag(final String tag) {
 		this.tag = tag;
 	}
 

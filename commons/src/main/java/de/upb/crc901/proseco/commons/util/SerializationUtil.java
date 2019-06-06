@@ -29,46 +29,44 @@ public class SerializationUtil {
 	private SerializationUtil() {
 	}
 
-	public static void writeAsJSON(File file, InterviewFillout interview) {
-		ObjectMapper mapper = new ObjectMapper();
+	public static void writeAsJSON(final File file, final InterviewFillout interview) {
+		final ObjectMapper mapper = new ObjectMapper();
 		try {
-			if (logger.isInfoEnabled()) {
-				logger.info("Saving interview state {} to {}", interview, file.getAbsoluteFile().getAbsolutePath());
-			}
+			final String path = file.getAbsoluteFile().getAbsolutePath();
+			logger.info("Saving interview state {} to {}", interview, path);
 			if (!file.getParentFile().exists()) {
 				FileUtils.forceMkdir(file.getParentFile());
 			}
 			mapper.writeValue(file.getAbsoluteFile(), interview);
-		} catch (IOException e) {
+		} catch (final IOException e) {
 			logger.error(e.getMessage());
 		}
-		if (logger.isInfoEnabled()) {
-			logger.info("File exists: {}", file.getAbsoluteFile().exists());
-		}
+		final boolean fileExists = file.getAbsoluteFile().exists();
+		logger.info("File exists: {}", fileExists);
 	}
 
-	public static InterviewFillout readAsJSON(File file) {
+	public static InterviewFillout readAsJSON(final File file) {
 		InterviewFillout interview = null;
-		ObjectMapper mapper = new ObjectMapper();
+		final ObjectMapper mapper = new ObjectMapper();
 		try {
 			interview = mapper.readValue(file, InterviewFillout.class);
-		} catch (IOException e) {
+		} catch (final IOException e) {
 			logger.error(e.getMessage());
 		}
 		return interview;
 	}
 
-	public static void write(String path, Interview interview) {
-		String filePath = path + "interview_state";
+	public static void write(final String path, final Interview interview) {
+		final String filePath = path + "interview_state";
 		try (FileOutputStream f = new FileOutputStream(new File(filePath)); ObjectOutputStream o = new ObjectOutputStream(f)) {
 			o.writeObject(interview);
-		} catch (IOException e) {
+		} catch (final IOException e) {
 			logger.error(e.getMessage());
 		}
 	}
 
-	public static Interview read(String path) {
-		String filePath = path + "interview_state";
+	public static Interview read(final String path) {
+		final String filePath = path + "interview_state";
 		Interview interview = null;
 		try (FileInputStream f = new FileInputStream(new File(filePath)); ObjectInputStream o = new ObjectInputStream(f)) {
 			interview = (Interview) o.readObject();

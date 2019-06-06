@@ -110,14 +110,10 @@ public class ProcessStateProvider {
 	 */
 	public static PROSECOProcessEnvironment getProcessEnvironment(final String processID) {
 		if (envCache.containsKey(processID)) {
-			if (logger.isTraceEnabled()) {
-				logger.trace("return env from cache for processid {}", processID);
-			}
+			logger.trace("return env from cache for processid {}", processID);
 			return envCache.get(processID);
 		} else {
-			if (logger.isTraceEnabled()) {
-				logger.trace("create new process environment for {}", processID);
-			}
+			logger.trace("create new process environment for {}", processID);
 			final PROSECOProcessEnvironment env = PROCESS_CONTROLLER.getConstructionProcessEnvironment(processID);
 			envCache.put(processID, env);
 			return env;

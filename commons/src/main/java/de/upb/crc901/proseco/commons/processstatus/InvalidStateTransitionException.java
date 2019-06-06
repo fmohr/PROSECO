@@ -13,13 +13,6 @@ public class InvalidStateTransitionException extends Exception {
 	private static final long serialVersionUID = 4385610322796895379L;
 
 	/**
-	 * Default constructor
-	 */
-	public InvalidStateTransitionException() {
-		super();
-	}
-
-	/**
 	 * Constructor with message
 	 *
 	 * @param msg String message
