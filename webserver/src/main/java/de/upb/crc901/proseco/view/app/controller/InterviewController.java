@@ -235,9 +235,7 @@ public class InterviewController {
 				logger.info("Processing answer {} to question {}", answerToThisQuestion, q);
 				if (q.getUiElement() != null && "file".equals(q.getUiElement().getAttributes().get("type"))) {
 					logger.warn("Cannot process file fields in standard process");
-					continue;
-				}
-				if (i < answers.size()) {
+				} else if (i < answers.size()) {
 					updatedAnswers.put(q.getId(), answerToThisQuestion);
 					logger.info("Updating answer of question {} to: {}", q.getId(), answerToThisQuestion);
 					i++;
