@@ -120,11 +120,8 @@ public abstract class AProsecoConfigurationProcess implements ProcessController 
 		Optional<File> winningStrategy = Optional.empty();
 		double bestScoreSeen = Double.MAX_VALUE;
 		for (final File strategy : this.processEnvironment.getStrategyDirectory().listFiles()) {
-			if (!strategy.isDirectory()) {
-				continue;
-			}
 			final File fValueFile = this.getFvalueFile(strategy);
-			if (!fValueFile.exists()) {
+			if (!strategy.isDirectory() || !fValueFile.exists()) {
 				continue;
 			}
 			final Double parsedValue = this.getParsedScore(fValueFile);
