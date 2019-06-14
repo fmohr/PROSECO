@@ -2,7 +2,6 @@ package de.upb.crc901.proseco.commons.controller;
 
 import java.io.File;
 import java.io.IOException;
-import java.util.UUID;
 
 import org.apache.commons.io.FileUtils;
 
@@ -22,21 +21,16 @@ public class DefaultProcessController implements ProcessController {
 		this.prosecoConfigFile = prosecoConfigFile;
 		config = PROSECOConfig.get(prosecoConfigFile);
 	}
+	
 
-	/**
-	 * Creates a new PROSECO service construction process for a given prototype. The prototype skeleton is copied for the new process.
-	 * 
-	 * @return id The id for the newly created process
-	 * @throws IOException
-	 */
-	public PROSECOProcessEnvironment createConstructionProcessEnvironment(String domainName) throws IOException {
-		String id = domainName + "-" + UUID.randomUUID().toString().replace("-", "").substring(0, 10).toLowerCase();
-		File processFolder = new File(config.getDirectoryForProcesses() + File.separator + id);
+	public PROSECOProcessEnvironment createConstructionProcessEnvironment(String domainName, String processId) throws IOException {
+		processId = processId.toLowerCase();
+		File processFolder = new File(config.getDirectoryForProcesses() + File.separator + processId);
 		FileUtils.forceMkdir(processFolder);
-		ProcessConfig pc = new ProcessConfig(id, domainName, prosecoConfigFile);
+		ProcessConfig pc = new ProcessConfig(processId, domainName, prosecoConfigFile);
 		new ObjectMapper().writeValue(new File(processFolder + File.separator + "process.json"), pc);
-		PROSECOProcessEnvironment env = new PROSECOProcessEnvironment(processFolder);
-		return env;
+		return new PROSECOProcessEnvironment(processFolder);
+
 	}
 
 	public PROSECOProcessEnvironment getConstructionProcessEnvironment(String processId) {
