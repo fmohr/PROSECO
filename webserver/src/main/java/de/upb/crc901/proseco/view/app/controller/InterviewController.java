@@ -33,6 +33,7 @@ import org.thymeleaf.util.StringUtils;
 
 import de.upb.crc901.proseco.commons.controller.DefaultProcessController;
 import de.upb.crc901.proseco.commons.controller.ProcessController;
+import de.upb.crc901.proseco.commons.html.Parser;
 import de.upb.crc901.proseco.commons.html.Script;
 import de.upb.crc901.proseco.commons.interview.InterviewFillout;
 import de.upb.crc901.proseco.commons.interview.Question;
@@ -44,7 +45,6 @@ import de.upb.crc901.proseco.view.app.model.StrategyCandidatesDatastore;
 import de.upb.crc901.proseco.commons.processstatus.EProcessState;
 import de.upb.crc901.proseco.commons.processstatus.ProcessStateProvider;
 import de.upb.crc901.proseco.view.core.NextStateNotFoundException;
-import de.upb.crc901.proseco.view.core.Parser;
 import de.upb.crc901.proseco.commons.util.ListUtil;
 import de.upb.crc901.proseco.commons.util.SerializationUtil;
 

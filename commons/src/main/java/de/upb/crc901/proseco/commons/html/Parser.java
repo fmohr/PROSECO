@@ -1,4 +1,4 @@
-package de.upb.crc901.proseco.view.core;
+package de.upb.crc901.proseco.commons.html;
 
 import java.io.File;
 import java.io.IOException;
@@ -12,7 +12,6 @@ import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.dataformat.yaml.YAMLFactory;
 
-import de.upb.crc901.proseco.commons.html.Input;
 import de.upb.crc901.proseco.commons.interview.Interview;
 import de.upb.crc901.proseco.commons.interview.Question;
 import de.upb.crc901.proseco.commons.interview.QuestionCollection;
