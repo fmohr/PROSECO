@@ -2,7 +2,7 @@ package de.upb.crc901.proseco.view.core;
 
 /**
  * NumericOperand is an operand in the expression with numeric value
- * 
+ *
  * @author kadirayk
  *
  */
@@ -12,11 +12,11 @@ public class NumericOperand extends Operand {
 
 	public NumericOperand(String value) {
 		super(value);
-		numericValue = Double.valueOf(value);
+		this.numericValue = Double.valueOf(value);
 	}
 
 	public double getNumericValue() {
-		return numericValue;
+		return this.numericValue;
 	}
 
 	public void setNumericValue(double numericValue) {

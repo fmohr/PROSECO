@@ -4,7 +4,7 @@ import java.util.List;
 
 /**
  * List utility class
- * 
+ *
  * @author kadirayk
  *
  */

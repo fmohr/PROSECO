@@ -6,9 +6,9 @@ public class ProcessConfig {
 	private String processId;
 	private String domain; // knowing the domain, one can derive the interview state file and, from that file, extract knowledge about the prototype
 	private File prosecoConfigFile;
-	
+
 	public ProcessConfig() {
-		
+
 	}
 
 	public ProcessConfig(String processId, String domain, File prosecoConfigFile) {
@@ -19,15 +19,15 @@ public class ProcessConfig {
 	}
 
 	public String getProcessId() {
-		return processId;
+		return this.processId;
 	}
 
 	public String getDomain() {
-		return domain;
+		return this.domain;
 	}
 
 	public File getProsecoConfigFile() {
-		return prosecoConfigFile;
+		return this.prosecoConfigFile;
 	}
 
 	public void setProsecoConfigFile(File prosecoConfigFile) {

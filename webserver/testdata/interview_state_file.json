@@ -1,0 +1,368 @@
+{
+	"interview": 
+	{
+		"questionRepo": "questions.yaml",
+		"states": 
+		[
+			{
+				"name": "step0",
+				"transition": 
+				{
+					"default": "step1"
+				},
+
+				"questions": 
+				[
+					{
+						"id": "prototype",
+						"content": "Please select prototype",
+						"uiElement": 
+						{
+							"@type": "Select",
+							"tag": "select",
+							"content": null,
+							"attributes": 
+							{
+								"name": "prototype"
+							},
+
+							"options": 
+							[
+								{
+									"@type": "Option",
+									"tag": "option",
+									"content": "Test",
+									"attributes": 
+									{
+										"value": "test"
+									}
+								}
+							]
+						}
+					}
+				]
+			},
+
+			{
+				"name": "step1",
+				"transition": 
+				{
+					"default": "step2"
+				},
+
+				"questions": 
+				[
+					{
+						"id": "dummy1",
+						"content": "dummy question 1",
+						"uiElement": null
+					}
+				]
+			},
+
+			{
+				"name": "step2",
+				"transition": 
+				{
+					"default": "step3"
+				},
+
+				"questions": 
+				[
+					{
+						"id": "dummy2",
+						"content": "dummy question 2",
+						"uiElement": null
+					}
+				]
+			},
+
+			{
+				"name": "step3",
+				"transition": 
+				{
+					"default": "step4"
+				},
+
+				"questions": 
+				[
+					{
+						"id": "dummy3",
+						"content": "dummy question 3",
+						"uiElement": null
+					}
+				]
+			},
+
+			{
+				"name": "step4",
+				"transition": 
+				{
+					"default": "timeout"
+				},
+
+				"questions": 
+				[
+					{
+						"id": "dummy4",
+						"content": "dummy question 4",
+						"uiElement": null
+					}
+				]
+			},
+
+			{
+				"name": "step5",
+				"transition": null,
+				"questions": 
+				[
+					{
+						"id": "run",
+						"content": "Click to run process",
+						"uiElement": 
+						{
+							"@type": "Input",
+							"tag": "input",
+							"content": null,
+							"attributes": 
+							{
+								"name": "final",
+								"type": "hidden"
+							}
+						}
+					}
+				]
+			},
+
+			{
+				"name": "timeout",
+				"transition": 
+				{
+					"default": "step5"
+				},
+
+				"questions": 
+				[
+					{
+						"id": "timeout",
+						"content": "Please specify a time out value in seconds",
+						"uiElement": 
+						{
+							"@type": "Input",
+							"tag": "input",
+							"content": null,
+							"attributes": 
+							{
+								"name": "timeout",
+								"type": "number"
+							}
+						}
+					}
+				]
+			}
+		],
+
+		"stateMap": 
+		{
+			"step4": 
+			{
+				"name": "step4",
+				"transition": 
+				{
+					"default": "timeout"
+				},
+
+				"questions": 
+				[
+					{
+						"id": "dummy4",
+						"content": "dummy question 4",
+						"uiElement": null
+					}
+				]
+			},
+
+			"step5": 
+			{
+				"name": "step5",
+				"transition": null,
+				"questions": 
+				[
+					{
+						"id": "run",
+						"content": "Click to run process",
+						"uiElement": 
+						{
+							"@type": "Input",
+							"tag": "input",
+							"content": null,
+							"attributes": 
+							{
+								"name": "final",
+								"type": "hidden"
+							}
+						}
+					}
+				]
+			},
+
+			"step2": 
+			{
+				"name": "step2",
+				"transition": 
+				{
+					"default": "step3"
+				},
+
+				"questions": 
+				[
+					{
+						"id": "dummy2",
+						"content": "dummy question 2",
+						"uiElement": null
+					}
+				]
+			},
+
+			"step3": 
+			{
+				"name": "step3",
+				"transition": 
+				{
+					"default": "step4"
+				},
+
+				"questions": 
+				[
+					{
+						"id": "dummy3",
+						"content": "dummy question 3",
+						"uiElement": null
+					}
+				]
+			},
+
+			"step0": 
+			{
+				"name": "step0",
+				"transition": 
+				{
+					"default": "step1"
+				},
+
+				"questions": 
+				[
+					{
+						"id": "prototype",
+						"content": "Please select prototype",
+						"uiElement": 
+						{
+							"@type": "Select",
+							"tag": "select",
+							"content": null,
+							"attributes": 
+							{
+								"name": "prototype"
+							},
+
+							"options": 
+							[
+								{
+									"@type": "Option",
+									"tag": "option",
+									"content": "Test",
+									"attributes": 
+									{
+										"value": "test"
+									}
+								}
+							]
+						}
+					}
+				]
+			},
+
+			"timeout": 
+			{
+				"name": "timeout",
+				"transition": 
+				{
+					"default": "step5"
+				},
+
+				"questions": 
+				[
+					{
+						"id": "timeout",
+						"content": "Please specify a time out value in seconds",
+						"uiElement": 
+						{
+							"@type": "Input",
+							"tag": "input",
+							"content": null,
+							"attributes": 
+							{
+								"name": "timeout",
+								"type": "number"
+							}
+						}
+					}
+				]
+			},
+
+			"step1": 
+			{
+				"name": "step1",
+				"transition": 
+				{
+					"default": "step2"
+				},
+
+				"questions": 
+				[
+					{
+						"id": "dummy1",
+						"content": "dummy question 1",
+						"uiElement": null
+					}
+				]
+			}
+		}
+	},
+
+	"answers": 
+	{
+		"prototype": "test",
+		"nonexisting-id": "dummy answer",
+		"file": "testdata/test.txt"
+	},
+
+	"currentState": 
+	{
+		"name": "step2",
+		"transition": 
+		{
+			"default": "step3"
+		},
+
+		"questions": 
+		[
+			{
+				"id": "file",
+				"content": "upload test file.",
+				"uiElement": 
+				{
+					"@type": "Input",
+					"tag": "input",
+					"content": null,
+					"attributes": 
+					{
+						"name": "testFile",
+						"id": "testFile",
+						"type": "file"
+					}
+				}
+			}
+		]
+	}
+}

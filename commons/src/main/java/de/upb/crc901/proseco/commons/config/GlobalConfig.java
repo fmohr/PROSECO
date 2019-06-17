@@ -11,16 +11,13 @@ import org.aeonbits.owner.Config;
  */
 public interface GlobalConfig extends Config {
 
-	/* Keys for accessing properties. */
 	public static final String K_DEBUG_MODE = "proseco.debug.mode";
 	public static final String K_REDIRECT_PROCESS_OUTPUTS = "proseco.debug.redirectoutputs";
 	public static final String K_DISABLE_GROUNDING = "proseco.debug.disableGrounding";
 	public static final String K_DISABLE_DEPLOYMENT = "proseco.debug.disableDeployment";
-
 	public static final String K_PROSECO_CONFIG_FILE = "proseco.config_file";
 	public static final String K_SCRIPT_EXTENSION_WIN = "proseco.script.extension.windows";
 	public static final String K_SCRIPT_EXTENSION_NOWIN = "proseco.script.extension.nonwindows";
-
 	public static final String K_PROCESS_CONFIG_FILENAME = "proseco.process.config_filename";
 
 	/**

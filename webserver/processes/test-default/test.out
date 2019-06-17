@@ -1,0 +1,16 @@
+Strategy 
+file:C:\Users\Kadiray\work_proseco_fork\PROSECO\core\domains\test\prototypes\test\strategies\strategy1\run.bat 
+param1:C:\Users\Kadiray\work_proseco_fork\PROSECO\core\processes\test-default 
+param2:C:\Users\Kadiray\work_proseco_fork\PROSECO\core\processes\test-default\search\inputs 
+param3:C:\Users\Kadiray\work_proseco_fork\PROSECO\core\processes\test-default\search\outputs\strategy1 
+param4:945 
+Grounding 
+file:C:\Users\Kadiray\work_proseco_fork\PROSECO\core\domains\test\prototypes\test\grounding.bat  
+param1:test-default 
+param2:C:\Users\Kadiray\work_proseco_fork\PROSECO\core\processes\test-default\search\outputs\strategy1 
+param3:C:\Users\Kadiray\work_proseco_fork\PROSECO\core\processes\test-default\search\outputs\final 
+Deployment 
+file:C:\Users\Kadiray\work_proseco_fork\PROSECO\core\domains\test\prototypes\test\deployment.bat  
+param1:test-default 
+param2:localhost 
+param3:18080 

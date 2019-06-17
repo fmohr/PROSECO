@@ -9,76 +9,84 @@ import java.nio.file.Files;
 import java.nio.file.NoSuchFileException;
 import java.nio.file.Paths;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 /**
  * File Utility class
- * 
+ *
  * @author kadirayk
  *
  */
 public class FileUtil {
-	public static void writeToFile(String filePath, String content) {
+
+	private static final Logger logger = LoggerFactory.getLogger(FileUtil.class);
+
+	private FileUtil() {
+	}
+
+	/**
+	 * Write given string content to given filePath
+	 *
+	 * @param filePath path in file system
+	 * @param content string value
+	 */
+	public static void writeToFile(final String filePath, final String content) {
 		PrintWriter writer;
 		try {
-			File output = new File(filePath);
+			final File output = new File(filePath);
 			writer = new PrintWriter(output);
 			writer.print(content);
 			writer.close();
-		} catch (FileNotFoundException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+		} catch (final FileNotFoundException e) {
+			logger.error(e.getMessage());
 		}
 	}
 
-	public static String readFile(String filePath) {
+	/**
+	 * Returns content of a file as String by given filePath
+	 *
+	 * @param filePath path in file system
+	 * @return String content
+	 */
+	public static String readFile(final String filePath) {
 		byte[] encoded = null;
 		String content = null;
 		try {
 			encoded = Files.readAllBytes(Paths.get(filePath));
-		} catch (NoSuchFileException e) {
+		} catch (final NoSuchFileException e) {
 			return content;
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+		} catch (final IOException e) {
+			logger.error(e.getMessage());
 		}
 		try {
 			if (encoded != null) {
 				content = new String(encoded, "utf-8");
 			}
-		} catch (UnsupportedEncodingException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+		} catch (final UnsupportedEncodingException e) {
+			logger.error(e.getMessage());
 		}
 		return content;
 	}
 
-	public static String readFileByLineNumber(String filePath, Integer line) {
-		byte[] encoded = null;
-		String content = null;
-		try {
-			encoded = Files.readAllBytes(Paths.get(filePath));
-		} catch (NoSuchFileException e) {
-			return content;
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		try {
-			if (encoded != null) {
-				content = new String(encoded, "utf-8");
-				String[] arr = content.split("\n");
-				StringBuilder str = new StringBuilder();
-				if (arr.length > line) {
-					for (int i = line; i < arr.length; i++) {
-						str.append(arr[i]).append("\n");
-					}
-					content = str.toString();
-				} else {
-					return "";
+	/**
+	 * Returns the content of a file after given line number
+	 *
+	 * @param filePath path in file system
+	 * @param line line number in file
+	 * @return content of the file after the given line number
+	 */
+	public static String readFileByLineNumber(final String filePath, final Integer line) {
+		String content = readFile(filePath);
+		if (content != null) {
+			final String[] arr = content.split("\n");
+			final StringBuilder str = new StringBuilder();
+			if (arr.length > line) {
+				for (int i = line; i < arr.length; i++) {
+					str.append(arr[i]).append("\n");
 				}
+				content = str.toString();
 			}
-		} catch (UnsupportedEncodingException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
 		}
 		return content;
 	}

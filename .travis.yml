@@ -17,6 +17,7 @@ jdk:
 
 before_script: 
   - chmod +x gradlew
+  - chmod -R +x core/domains/test/prototypes
   
 addons:
   sonarcloud:
@@ -24,13 +25,13 @@ addons:
    
    
 script:
-  - ./gradlew build -x test 
-  - sonar-scanner -X
-  
-  
+  - ./gradlew build
+  #- ./gradlew generateJavadoc
+  #- git fetch --unshallow
+  - git fetch --no-tags --unshallow https://github.com/fmohr/PROSECO.git +development:refs/heads/development
+  - 'if [ "$TRAVIS_PULL_REQUEST_SLUG" = "$TRAVIS_REPO_SLUG" ]; then sonar-scanner; fi' # sonar only on internal PR
 
 branches:
   only:
   - master
   - development
-  

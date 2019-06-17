@@ -2,10 +2,10 @@ package de.upb.crc901.proseco.view.app.model;
 
 public class StrategyCandidateFoundEvent {
 
-	public String candidateID;
-	public long candidateFoundTimestamp;
-	public String candidateDescription;
-	public double candidateEvaluation;
+	private String candidateID;
+	private long candidateFoundTimestamp;
+	private String candidateDescription;
+	private double candidateEvaluation;
 
 	public StrategyCandidateFoundEvent() {
 		// intentionally do nothing.

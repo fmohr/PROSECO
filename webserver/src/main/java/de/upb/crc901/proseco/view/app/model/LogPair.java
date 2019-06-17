@@ -18,8 +18,16 @@ public class LogPair {
 	private String systemErrorLog;
 	private String systemAllLog;
 
-	public LogPair(final String prototypeName, final String strategyName, final String systemOutLog,
-			final String systemErrorLog, final String systemAllLog) {
+	/**
+	 * Default constructor
+	 *
+	 * @param prototypeName name of the prototype
+	 * @param strategyName name of the strategy
+	 * @param systemOutLog log for system out
+	 * @param systemErrorLog log for system error
+	 * @param systemAllLog log for both system out and error
+	 */
+	public LogPair(final String prototypeName, final String strategyName, final String systemOutLog, final String systemErrorLog, final String systemAllLog) {
 		this.prototypeName = prototypeName;
 		this.strategyName = strategyName.replace(" ", "-");
 		this.systemOutLog = systemOutLog;
@@ -69,7 +77,7 @@ public class LogPair {
 
 	@Override
 	public String toString() {
-		Map<String, Object> fields = new HashMap<>();
+		final Map<String, Object> fields = new HashMap<>();
 		fields.put("strategyName", this.strategyName);
 		fields.put("systemOutLog", this.systemOutLog);
 		fields.put("systemErrorLog", this.systemErrorLog);

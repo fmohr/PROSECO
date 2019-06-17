@@ -1,0 +1,30 @@
+questionRepo: questions.yaml
+states:
+- name: step0
+  questions:
+  - id: prototype
+  transition:
+    default: step1
+- name: step1
+  questions:
+  - id: dummy1
+  transition:
+    default: step2
+- name: step2
+  questions:
+  - id: dummy2
+  transition:
+    default: step3
+- name: step3
+  questions:
+  - id: dummy3
+  transition:
+    default: step4
+- name: step4
+  questions:
+  - id: dummy4
+  transition:
+    default: step5
+- name: step5
+  questions:
+  - id: run
