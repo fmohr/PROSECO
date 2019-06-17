@@ -16,9 +16,9 @@ import org.apache.commons.lang3.StringUtils;
  *
  */
 public class ExpressionEvaluator {
-	Deque<Node> operatorStack;
-	Queue<Node> postfixQueue;
-	Deque<Node> evaluationStack;
+	private Deque<Node> operatorStack;
+	private Queue<Node> postfixQueue;
+	private Deque<Node> evaluationStack;
 
 	public ExpressionEvaluator(String expression) {
 		operatorStack = new ArrayDeque<>();
