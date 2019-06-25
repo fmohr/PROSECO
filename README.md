@@ -27,6 +27,7 @@ We would appreciate your citation, if you use PROSECO in a publication:
 
 Felix Mohr, Marcel Wever, and Eyke Hüllermeier. "On-the-Fly Service Construction with Prototypes." 2018 IEEE International Conference on Services Computing (SCC). IEEE, 2018.
 
+
 ```
 @inproceedings{DBLP:conf/IEEEscc/MohrWH18,
   author    = {Felix Mohr and
