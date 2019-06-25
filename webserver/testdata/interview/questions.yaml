@@ -1,0 +1,34 @@
+questions:
+- id: prototype
+  content: Please select prototype
+  uiElement:
+    '@type': Select
+    attributes:
+      name: prototype
+    options:
+    - '@type': Option
+      content: Test
+      attributes:
+        value: test
+- id: file
+  content: upload test file.
+  uiElement:
+    '@type': Input
+    attributes:
+      name: testFile
+      type: file 
+- id: dummy1
+  content: dummy question 1
+- id: dummy2
+  content: dummy question 2
+- id: dummy3
+  content: dummy question 3
+- id: dummy4
+  content: dummy question 4
+- id: run
+  content: Click to run process
+  uiElement:
+    '@type': Input
+    attributes:
+      name: final
+      type: hidden

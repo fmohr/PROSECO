@@ -1,43 +1,14 @@
 buildscript {
-  repositories {
-    maven {
-      url "https://plugins.gradle.org/m2/"
-    }
-  }
   dependencies {
     classpath "org.springframework.boot:spring-boot-gradle-plugin:2.1.0.RELEASE"
   }
 }
 
-apply plugin: 'java'
-apply plugin: "eclipse"
 apply plugin: 'org.springframework.boot'
 
 jar {
     baseName = 'PROSECO-webserver'
     version = '0.0.1-SNAPSHOT'
-}
-sourceCompatibility = 1.8
-
-repositories { mavenCentral() }
-
-project.group = 'de.upb.isys'
-project.version = '0.0.1-SNAPSHOT'
-
-sourceSets {
-    main {
-        java {
-            srcDir 'src'
-        }
-        resources {
-        	srcDir 'res'
-    	}
-    }
-    test {
-    	java {
-    		srcDir 'test'
-    	}
-    }
 }
 
 dependencies {

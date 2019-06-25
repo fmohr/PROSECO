@@ -16,7 +16,7 @@ public class LogLine {
 	}
 
 	public String getStrategyName() {
-		return strategyName;
+		return this.strategyName;
 	}
 
 	public void setStrategyName(String strategyName) {
@@ -24,7 +24,7 @@ public class LogLine {
 	}
 
 	public Integer getOutLineNumber() {
-		return outLineNumber;
+		return this.outLineNumber;
 	}
 
 	public void setOutLineNumber(Integer outLineNumber) {
@@ -32,7 +32,7 @@ public class LogLine {
 	}
 
 	public Integer getErrLineNumber() {
-		return errLineNumber;
+		return this.errLineNumber;
 	}
 
 	public void setErrLineNumber(Integer errLineNumber) {
@@ -40,7 +40,7 @@ public class LogLine {
 	}
 
 	public Integer getAllLineNumber() {
-		return allLineNumber;
+		return this.allLineNumber;
 	}
 
 	public void setAllLineNumber(Integer allLineNumber) {

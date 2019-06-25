@@ -2,14 +2,13 @@ package de.upb.crc901.proseco.view.core;
 
 /**
  * Enum of supported Operator types
- * 
+ *
  * @author kadirayk
  *
  */
 public enum OperatorEnum {
 
-	EQUAL("="), GREATER(">"), LESS("<"), GREATER_EQUAL(">="), LESS_EQUAL("<="), AND("&"), OR("|"), NOT("!"), LEFT_P(
-			"("), RIGHT_P(")");
+	EQUAL("="), GREATER(">"), LESS("<"), GREATER_EQUAL(">="), LESS_EQUAL("<="), AND("&"), OR("|"), NOT("!"), LEFT_P("("), RIGHT_P(")");
 
 	private String value;
 
@@ -28,7 +27,7 @@ public enum OperatorEnum {
 
 	/**
 	 * Arithmetic operators has a high precedence over logic operators
-	 * 
+	 *
 	 * @return
 	 */
 	public int precedence() {
@@ -47,7 +46,7 @@ public enum OperatorEnum {
 	}
 
 	public String value() {
-		return value;
+		return this.value;
 	}
 
 }

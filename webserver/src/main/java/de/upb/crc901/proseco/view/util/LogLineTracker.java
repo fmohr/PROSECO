@@ -7,6 +7,9 @@ import java.util.Map;
 
 public class LogLineTracker {
 
+	private LogLineTracker() {
+	}
+
 	private static Map<String, List<LogLine>> logMap = new HashMap<>();
 
 	public static void updateLog(String prototypeId, LogLine logLine) {

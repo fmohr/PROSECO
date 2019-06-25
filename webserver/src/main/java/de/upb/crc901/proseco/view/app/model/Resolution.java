@@ -5,7 +5,7 @@ import java.io.Serializable;
 public class Resolution implements Serializable {
 
 	/**
-	 * 
+	 *
 	 */
 	private static final long serialVersionUID = 2509719989340606054L;
 	private String height;
@@ -21,7 +21,7 @@ public class Resolution implements Serializable {
 	}
 
 	public String getHeight() {
-		return height;
+		return this.height;
 	}
 
 	public void setHeight(String height) {
@@ -29,7 +29,7 @@ public class Resolution implements Serializable {
 	}
 
 	public String getWidth() {
-		return width;
+		return this.width;
 	}
 
 	public void setWidth(String width) {

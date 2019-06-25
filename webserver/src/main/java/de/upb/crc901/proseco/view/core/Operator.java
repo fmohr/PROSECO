@@ -2,7 +2,7 @@ package de.upb.crc901.proseco.view.core;
 
 /**
  * Operator in an expression
- * 
+ *
  * @author kadirayk
  *
  */
