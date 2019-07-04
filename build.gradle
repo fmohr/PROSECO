@@ -44,6 +44,7 @@ allprojects {
 			resources {
 				srcDir 'conf'
 				srcDir 'resources'
+				srcDir 'res'
 			}
 		}
 		test {
