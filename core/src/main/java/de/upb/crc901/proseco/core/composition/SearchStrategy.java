@@ -13,8 +13,8 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import de.upb.crc901.proseco.commons.interview.InterviewFillout;
-import de.upb.crc901.proseco.commons.util.SerializationUtil;
 import de.upb.crc901.proseco.commons.util.PROSECOProcessEnvironment;
+import de.upb.crc901.proseco.commons.util.SerializationUtil;
 
 public abstract class SearchStrategy implements Runnable {
 
@@ -37,7 +37,7 @@ public abstract class SearchStrategy implements Runnable {
 		this.dirOfInputs = new File(args[1]);
 		this.dirOfOutputs = new File(args[2]);
 		this.strategyName = this.dirOfOutputs.getName();
-		L.debug("Recognized strategy {} by output dir name. Using {} as input folder.", strategyName, dirOfInputs.getAbsolutePath());
+		L.debug("Recognized strategy {} by output dir name. Using {} as input folder.", this.strategyName, this.dirOfInputs.getAbsolutePath());
 		this.deadline = System.currentTimeMillis() + Integer.valueOf(args[3]) * 1000;
 	}
 
@@ -56,9 +56,9 @@ public abstract class SearchStrategy implements Runnable {
 	public String getStrategyName() {
 		return this.strategyName;
 	}
-	
+
 	public InterviewFillout getInterview() {
-		return SerializationUtil.readAsJSON(getEnvironment().getInterviewStateFile());
+		return SerializationUtil.readAsJSON(this.getEnvironment().getInterviewStateFile());
 	}
 
 	protected boolean checkCandidate(final File candidateOutputFolder) throws InterruptedException, IOException {

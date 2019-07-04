@@ -12,20 +12,18 @@ import org.apache.commons.lang3.SystemUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.fasterxml.jackson.core.JsonParseException;
-import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
-import de.upb.crc901.proseco.commons.config.GlobalConfig;
-import de.upb.crc901.proseco.commons.interview.InterviewFillout;
 import de.upb.crc901.proseco.commons.config.DomainConfig;
+import de.upb.crc901.proseco.commons.config.GlobalConfig;
 import de.upb.crc901.proseco.commons.config.PROSECOConfig;
 import de.upb.crc901.proseco.commons.config.ProcessConfig;
 import de.upb.crc901.proseco.commons.config.PrototypeConfig;
-import de.upb.crc901.proseco.commons.util.SerializationUtil;
+import de.upb.crc901.proseco.commons.interview.InterviewFillout;
 
 /**
- * ExecutionEnvironment, is the directory where an instance of the selected prototype is created.
+ * ExecutionEnvironment, is the directory where an instance of the selected
+ * prototype is created.
  *
  * @author fmohr
  *
@@ -53,7 +51,10 @@ public class PROSECOProcessEnvironment {
 	/* domain-specific but process unspecific */
 	private final File interviewDirectory; // original interview files
 
-	/* domain-specific AND process-specific (specific to domain but not specific to prototype) */
+	/*
+	 * domain-specific AND process-specific (specific to domain but not specific to
+	 * prototype)
+	 */
 	private final File domainDirectory;
 	private final DomainConfig domainConfig;
 	private final File interviewStateDirectory;
@@ -72,26 +73,30 @@ public class PROSECOProcessEnvironment {
 
 	/* configuration-process-specific (specific to prototype) */
 	private final File searchDirectory;
-	// private final File configDirectory;
 	private final File analysisRoutineExecutable;
 	private final InterviewFillout interviewFillout;
 
 	/**
-	 * @param processFolder The process folder MUST, by convention, contain a process.json that contains its id, the domain, the prototype, and the proseco configuration that is used to run it
-	 * @throws FileNotFoundException
-	 * @throws IOException
+	 * Default constructor
+	 *
+	 * @param processFolder The process folder MUST, by convention, contain a
+	 *            process.json that contains its id, the domain, the
+	 *            prototype, and the proseco configuration that is used to
+	 *            run it
+	 * @throws IOException thrown on IO error in File System
 	 */
-	public PROSECOProcessEnvironment(final File processFolder) throws FileNotFoundException, IOException {
+	public PROSECOProcessEnvironment(final File processFolder) throws IOException {
 		L.debug("Initializing PROSECO process environment for process folder {}.", processFolder.getAbsolutePath());
 
-		ProcessConfig processConfig = this.loadAndValidateProcessConfig(processFolder);
+		final ProcessConfig processConfig = this.loadAndValidateProcessConfig(processFolder);
 
 		/* Figure out what operating system PROSECO is running in. */
 		this.os = (SystemUtils.IS_OS_WINDOWS ? OperatingSystem.WINDOWS : OperatingSystem.NON_WINDOWS);
-		L.debug("Detected {} operating system.", this.os.name());
+		final String osName = this.os.name();
+		L.debug("Detected {} operating system.", osName);
 
 		/* read PROSECO configuration and configure process */
-		File prosecoConfigFile = processConfig.getProsecoConfigFile().isAbsolute() ? processConfig.getProsecoConfigFile() : new File(processFolder + File.separator + processConfig.getProsecoConfigFile());
+		final File prosecoConfigFile = processConfig.getProsecoConfigFile().isAbsolute() ? processConfig.getProsecoConfigFile() : new File(processFolder + File.separator + processConfig.getProsecoConfigFile());
 		L.debug("Load PROSECO config from {}", prosecoConfigFile);
 		this.prosecoConfig = PROSECOConfig.get(prosecoConfigFile);
 
@@ -144,14 +149,14 @@ public class PROSECOProcessEnvironment {
 
 	}
 
-	private ProcessConfig loadAndValidateProcessConfig(final File processFolder) throws JsonParseException, JsonMappingException, IOException {
+	private ProcessConfig loadAndValidateProcessConfig(final File processFolder) throws IOException {
 		/* read the process.json */
-		String processConfigFilename = GLOBAL_CONFIG.processConfigFilename();
-		File processConfigFile = new File(processFolder, processConfigFilename);
+		final String processConfigFilename = GLOBAL_CONFIG.processConfigFilename();
+		final File processConfigFile = new File(processFolder, processConfigFilename);
 		if (!processConfigFile.exists()) {
 			throw new FileNotFoundException("Cannot create a PROSECOProcess environment for a folder without " + processConfigFilename);
 		}
-		ProcessConfig processConfig = new ObjectMapper().readValue(processConfigFile, ProcessConfig.class);
+		final ProcessConfig processConfig = new ObjectMapper().readValue(processConfigFile, ProcessConfig.class);
 		if (processConfig.getProcessId() == null) {
 			throw new IllegalArgumentException("The " + processConfigFilename + " MUST define a process id");
 		}
@@ -213,9 +218,10 @@ public class PROSECOProcessEnvironment {
 		return new File(this.getProcessDirectory() + File.separator + "service.handle");
 	}
 
-	/*##################################################
-	 * Block: Dynamic Prototype Specific Configs
-	 *##################################################*/
+	/*
+	 * ################################################## Block: Dynamic Prototype
+	 * Specific Configs ##################################################
+	 */
 	/**
 	 * @return The ID of the current process.
 	 */
@@ -247,23 +253,27 @@ public class PROSECOProcessEnvironment {
 	/**
 	 * Returns a strategy's output directory for a given strategy.
 	 *
-	 * @param strategy The name of the strategy for which the output directory shall be provided.
+	 * @param strategy The name of the strategy for which the output directory shall
+	 *            be provided.
 	 * @return The output directory of the given strategy.
 	 */
 	public File getSearchStrategyOutputDirectory(final String strategy) {
 		return new File(this.getSearchOutputDirectory() + File.separator + strategy);
 	}
 
-	/*##################################################
-	 * Block: Static Prototype Specific Configs
-	 *##################################################*/
+	/*
+	 * ################################################## Block: Static Prototype
+	 * Specific Configs ##################################################
+	 */
 
-	/*##################################################
-	 * Block: Prototype Executable Scripts
-	 *##################################################*/
+	/*
+	 * ################################################## Block: Prototype
+	 * Executable Scripts ##################################################
+	 */
 
 	/**
-	 * @return Returns the executable script for the verification of candidate solutions.
+	 * @return Returns the executable script for the verification of candidate
+	 *         solutions.
 	 */
 	public File verificationExecutable() {
 		return this.analysisRoutineExecutable;
@@ -283,12 +293,14 @@ public class PROSECOProcessEnvironment {
 		return this.groundingFile;
 	}
 
-	/*##################################################
-	 * Block: Utils and Other
-	 *##################################################*/
+	/*
+	 * ################################################## Block: Utils and Other
+	 * ##################################################
+	 */
 
 	/**
-	 * Appends the OS specific script file extension for executable scripts, i.e. either .bat or .sh.
+	 * Appends the OS specific script file extension for executable scripts, i.e.
+	 * either .bat or .sh.
 	 *
 	 * @param file The file to which the file extension is to be appended.
 	 * @return The prepared file with OS specific file extension.
@@ -309,7 +321,7 @@ public class PROSECOProcessEnvironment {
 
 	@Override
 	public String toString() {
-		StringBuilder sb = new StringBuilder();
+		final StringBuilder sb = new StringBuilder();
 		sb.append("##############################\n");
 		sb.append("# Environment				#\n");
 		sb.append("##############################\n");
@@ -321,7 +333,7 @@ public class PROSECOProcessEnvironment {
 		sb.append("Prototype Name: " + this.prototypeName + "\n");
 		sb.append("Interview Fillout: " + this.interviewFillout + "\n\n");
 
-		Map<String, File> fileMap = new HashMap<>();
+		final Map<String, File> fileMap = new HashMap<>();
 		fileMap.put("Process Directory", this.processDirectory);
 		fileMap.put("Interview Directory: ", this.interviewDirectory);
 		fileMap.put("Domain Directory: ", this.domainDirectory);
@@ -333,7 +345,7 @@ public class PROSECOProcessEnvironment {
 		fileMap.put("Search Directory: ", this.searchDirectory);
 		fileMap.put("Analysis Routine: ", this.analysisRoutineExecutable);
 
-		for (Entry<String, File> file : fileMap.entrySet()) {
+		for (final Entry<String, File> file : fileMap.entrySet()) {
 			sb.append(file.getKey() + ": " + ((file.getValue() == null) ? "null" : file.getValue().getAbsolutePath()) + "\n");
 		}
 

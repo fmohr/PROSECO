@@ -8,6 +8,8 @@ import java.util.Properties;
 
 import org.aeonbits.owner.ConfigFactory;
 import org.aeonbits.owner.Mutable;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * Unified class for configuration values
@@ -20,6 +22,7 @@ public interface PrototypeConfig extends Mutable {
 	/* search */
 	public static final String STRATEGIES = "pbc.strategies_path";
 	public static final String STRATEGY_RUNNABLE = "pbc.strategy.runnable";
+	public static final String DISABLED_STRATEGIES = "proseco.disabled.strategies";
 
 	/* pre-grounding filter */
 	public static final String PRE_GROUNDING_HOOK = "pbc.hook.preground";
@@ -52,6 +55,10 @@ public interface PrototypeConfig extends Mutable {
 	@DefaultValue("strategies")
 	public String getNameOfStrategyFolder();
 
+	@Key(DISABLED_STRATEGIES)
+	@DefaultValue("")
+	public String getDisabledStrategies();
+
 	@Key(GROUNDING_FOLDER)
 	@DefaultValue("")
 	public String getNameOfGroundingFolder();
@@ -59,7 +66,7 @@ public interface PrototypeConfig extends Mutable {
 	@Key(GROUNDING_EXEC)
 	@DefaultValue("grounding")
 	public String getGroundingCommand();
-	
+
 	@Key(GROUNDING_RESERVEDSECONDS)
 	@DefaultValue("5")
 	public int getSecondsReservedForGrounding();
@@ -83,7 +90,7 @@ public interface PrototypeConfig extends Mutable {
 	@Key(DEPLOYMENT_ENTRYPOINT)
 	@DefaultValue("")
 	public String getDeploymentEntryPoint();
-	
+
 	@Key(DEPLOYMENT_RESERVEDSECONDS)
 	@DefaultValue("5")
 	public int getSecondsReservedForDeployment();
@@ -102,12 +109,13 @@ public interface PrototypeConfig extends Mutable {
 
 	public static PrototypeConfig get(final File file) {
 		Properties props = new Properties();
+		final Logger logger = LoggerFactory.getLogger(PrototypeConfig.class);
 		try {
 			props.load(new FileInputStream(file));
 		} catch (FileNotFoundException e) {
-			System.err.println("Could not find config file " + file + ". Assuming default configuration");
+			logger.error("Could not find config file {}. Assuming default configuration", file);
 		} catch (IOException e) {
-			System.err.println("Encountered problem with config file " + file + ". Assuming default configuration. Problem:" + e.getMessage());
+			logger.error("Encountered problem with config file {}. Assuming default configuration. Problem: {}", file, e.getMessage());
 		}
 
 		return ConfigFactory.create(PrototypeConfig.class, props);

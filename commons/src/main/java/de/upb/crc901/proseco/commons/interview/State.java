@@ -4,18 +4,16 @@ import java.io.Serializable;
 import java.util.List;
 import java.util.Map;
 
-import de.upb.crc901.proseco.commons.interview.Question;
-import de.upb.crc901.proseco.commons.interview.State;
 import de.upb.crc901.proseco.commons.util.ListUtil;
 
 /**
- * 
+ *
  * @author fmohr
  *
  */
 public class State implements Serializable {
 	/**
-	 * 
+	 *
 	 */
 	private static final long serialVersionUID = -849218511658141465L;
 	private String name;
@@ -24,8 +22,8 @@ public class State implements Serializable {
 
 	public Question getQuestionById(String id) {
 		Question question = null;
-		if (ListUtil.isNotEmpty(questions)) {
-			for (Question q : questions) {
+		if (ListUtil.isNotEmpty(this.questions)) {
+			for (Question q : this.questions) {
 				if (id.equals(q.getId())) {
 					return q;
 				}
@@ -35,7 +33,7 @@ public class State implements Serializable {
 	}
 
 	public List<Question> getQuestions() {
-		return questions;
+		return this.questions;
 	}
 
 	public void setQuestions(List<Question> questions) {
@@ -43,7 +41,7 @@ public class State implements Serializable {
 	}
 
 	public String getName() {
-		return name;
+		return this.name;
 	}
 
 	public void setName(String name) {
@@ -51,7 +49,7 @@ public class State implements Serializable {
 	}
 
 	public Map<String, String> getTransition() {
-		return transition;
+		return this.transition;
 	}
 
 	public void setTransition(Map<String, String> transition) {
@@ -62,41 +60,50 @@ public class State implements Serializable {
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
-		result = prime * result + ((name == null) ? 0 : name.hashCode());
-		result = prime * result + ((questions == null) ? 0 : questions.hashCode());
-		result = prime * result + ((transition == null) ? 0 : transition.hashCode());
+		result = prime * result + ((this.name == null) ? 0 : this.name.hashCode());
+		result = prime * result + ((this.questions == null) ? 0 : this.questions.hashCode());
+		result = prime * result + ((this.transition == null) ? 0 : this.transition.hashCode());
 		return result;
 	}
 
 	@Override
 	public boolean equals(Object obj) {
-		if (this == obj)
+		if (this == obj) {
 			return true;
-		if (obj == null)
+		}
+		if (obj == null) {
 			return false;
-		if (getClass() != obj.getClass())
+		}
+		if (this.getClass() != obj.getClass()) {
 			return false;
+		}
 		State other = (State) obj;
-		if (name == null) {
-			if (other.name != null)
+		if (this.name == null) {
+			if (other.name != null) {
 				return false;
-		} else if (!name.equals(other.name))
+			}
+		} else if (!this.name.equals(other.name)) {
 			return false;
-		if (questions == null) {
-			if (other.questions != null)
+		}
+		if (this.questions == null) {
+			if (other.questions != null) {
 				return false;
-		} else if (!questions.equals(other.questions))
+			}
+		} else if (!this.questions.equals(other.questions)) {
 			return false;
-		if (transition == null) {
-			if (other.transition != null)
+		}
+		if (this.transition == null) {
+			if (other.transition != null) {
 				return false;
-		} else if (!transition.equals(other.transition))
+			}
+		} else if (!this.transition.equals(other.transition)) {
 			return false;
+		}
 		return true;
 	}
 
 	@Override
 	public String toString() {
-		return "State [name=" + name + ", transition=" + transition + ", questions=" + questions + "]";
+		return "State [name=" + this.name + ", transition=" + this.transition + ", questions=" + this.questions + "]";
 	}
 }

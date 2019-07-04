@@ -1,21 +1,9 @@
-buildscript {
-    repositories { mavenCentral() }
-}
-
-plugins { id "io.spring.dependency-management" version "1.0.5.RELEASE" }
-
 ext { springBootVersion = '1.5.16.RELEASE' }
-
-apply plugin: 'java'
-apply plugin: 'eclipse'
 
 jar {
     baseName = 'PROSECO-commons'
     version = '0.0.1-SNAPSHOT'
 }
-sourceCompatibility = 1.8
-
-repositories { mavenCentral() }
 
 dependencies {	
 	//owner framework
@@ -29,7 +17,6 @@ dependencies {
 	
 	// https://mvnrepository.com/artifact/org.slf4j/slf4j-api
 	compile group: 'org.slf4j', name: 'slf4j-api', version: '1.7.25'
-	
 	
 	//jackson for YAML
 	compile 'com.fasterxml.jackson.dataformat:jackson-dataformat-yaml:2.8.10'

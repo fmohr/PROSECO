@@ -2,7 +2,7 @@ package de.upb.crc901.proseco.view.core;
 
 /**
  * Node is an abstract class of Operands or Operators in an expression
- * 
+ *
  * @author kadirayk
  *
  */
@@ -14,7 +14,7 @@ public abstract class Node {
 	}
 
 	public String getValue() {
-		return value;
+		return this.value;
 	}
 
 	public void setValue(String value) {

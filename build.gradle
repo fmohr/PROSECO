@@ -1,0 +1,83 @@
+// Artifact publishing and versoning
+plugins {
+	id 'nebula.release' version '6.0.2'
+	id "nebula.project" version "3.4.0"
+	id "nebula.maven-base-publish" version "5.1.4"
+	id "org.sonarqube" version "2.6.2"
+}
+
+
+allprojects {
+        
+	buildscript {
+ 		repositories {
+			mavenLocal()
+			mavenCentral()
+			maven { url "https://plugins.gradle.org/m2/" }
+		}
+	}
+
+	//IDE
+	apply plugin: "java"
+	apply plugin: "eclipse"
+	apply plugin: "idea"
+
+	//Other
+	apply plugin: "maven"
+	apply plugin: "jacoco"
+	apply plugin: "signing"
+
+	//Nebula
+	apply plugin: 'nebula.project'
+	apply plugin: 'nebula.nebula-release'
+	apply plugin: 'nebula.maven-base-publish'
+
+	//Java version
+	sourceCompatibility = 1.8
+	targetCompatibility = 1.8
+	
+	sourceSets {
+		main {
+			java {
+				srcDir 'src/main/java'
+			}
+			resources {
+				srcDir 'conf'
+				srcDir 'resources'
+				srcDir 'res'
+			}
+		}
+		test {
+			java {
+				srcDir 'src/test/java'
+				srcDir 'src/example/java'
+			}
+		}
+	}
+	
+	repositories {
+		mavenCentral()
+		mavenLocal()
+	}
+	
+	dependencies {
+		testCompile group: 'junit', name: 'junit', version: '4.12'
+	}
+	
+	// generate JavaDoc for each project
+    task generateJavadoc(type: Javadoc) {
+       	source = sourceSets.main.allJava
+       	classpath = files(sourceSets.main.compileClasspath)
+       	destinationDir = file("docs/javadoc")
+		failOnError = true
+	}
+
+	jacocoTestReport {
+    		reports {
+	        	xml.enabled = true
+	        	html.enabled = true
+	    	}
+	}
+
+	check.dependsOn jacocoTestReport
+}

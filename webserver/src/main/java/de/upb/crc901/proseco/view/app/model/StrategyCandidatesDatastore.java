@@ -1,6 +1,5 @@
 package de.upb.crc901.proseco.view.app.model;
 
-import java.util.Comparator;
 import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
@@ -15,11 +14,8 @@ public class StrategyCandidatesDatastore {
 	}
 
 	public boolean put(final String strategyID, final StrategyCandidateFoundEvent e) {
-		List<StrategyCandidateFoundEvent> eventList = this.eventStore.get(strategyID);
-		if (eventList == null) {
-			eventList = new LinkedList<>();
-			this.eventStore.put(strategyID, eventList);
-		}
+		List<StrategyCandidateFoundEvent> eventList = this.eventStore.computeIfAbsent(strategyID, k -> new LinkedList<>());
+		this.eventStore.put(strategyID, eventList);
 		return eventList.add(e);
 	}
 
@@ -28,17 +24,13 @@ public class StrategyCandidatesDatastore {
 			return new double[0];
 		}
 
-		return new LinkedList<>(this.eventStore.get(strategyID)).stream().sorted(new Comparator<StrategyCandidateFoundEvent>() {
-			@Override
-			public int compare(final StrategyCandidateFoundEvent arg0, final StrategyCandidateFoundEvent arg1) {
-				return Long.compare(arg0.getCandidateFoundTimestamp(), arg1.getCandidateFoundTimestamp());
-			}
-		}).mapToDouble(x -> x.getCandidateEvaluation()).toArray();
+		return new LinkedList<>(this.eventStore.get(strategyID)).stream().sorted((arg0, arg1) -> Long.compare(arg0.getCandidateFoundTimestamp(), arg1.getCandidateFoundTimestamp()))
+				.mapToDouble(StrategyCandidateFoundEvent::getCandidateEvaluation).toArray();
 
 	}
 
 	public int size() {
-		return this.eventStore.values().stream().mapToInt(x -> x.size()).sum();
+		return this.eventStore.values().stream().mapToInt(List::size).sum();
 	}
 
 }

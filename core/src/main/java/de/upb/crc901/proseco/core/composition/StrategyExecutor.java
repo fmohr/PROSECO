@@ -6,7 +6,10 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.lang.ProcessBuilder.Redirect;
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.LinkedList;
+import java.util.List;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.Semaphore;
@@ -18,10 +21,13 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import de.upb.crc901.proseco.commons.config.GlobalConfig;
+import de.upb.crc901.proseco.commons.controller.PROSECORuntimeException;
 import de.upb.crc901.proseco.commons.util.PROSECOProcessEnvironment;
 
 /**
- * ExecuteStrategiesCommand, searches for strategy subfolders and forking a new process for each strategy. Output and Error streams of these processes are directed to <code>systemlog/systemOut.log</code> and
+ * ExecuteStrategiesCommand, searches for strategy subfolders and forking a new
+ * process for each strategy. Output and Error streams of these processes are
+ * directed to <code>systemlog/systemOut.log</code> and
  * <code>systemlog/systemErr.log</code> files respectively.
  *
  * @author kadirayk, fmohr, wever
@@ -43,24 +49,64 @@ public class StrategyExecutor {
 		this.executionEnvironment = executionEnvironment;
 	}
 
+	private File[] filterDisabledStrategies(File[] strategyDirectories) {
+		List<File> strategyDirs = Arrays.asList(strategyDirectories);
+		if (strategyDirectories != null) {
+			String[] disabledStrategies = this.executionEnvironment.getPrototypeConfig().getDisabledStrategies().split(",");
+			List<String> disabled = new LinkedList<>(Arrays.asList(disabledStrategies));
+			if (disabled.contains("")) {
+				disabled.remove("");
+			}
+			disabledStrategies = disabled.toArray(new String[disabled.size()]);
+			if (disabledStrategies != null && disabledStrategies.length != 0) {
+				List<File> filteredStrategies = new ArrayList<>();
+				for (int i = 0; i < strategyDirs.size(); i++) {
+					this.addToFilteredStrategies(strategyDirs, disabledStrategies, filteredStrategies, i);
+				}
+				strategyDirectories = filteredStrategies.toArray(new File[filteredStrategies.size()]);
+			}
+		}
+
+		return strategyDirectories;
+	}
+
+	private void addToFilteredStrategies(List<File> strategyDirs, String[] disabledStrategies, List<File> filteredStrategies, int i) {
+		boolean isDisabled = false;
+		for (String disabledStrategy : disabledStrategies) {
+			if (strategyDirs.get(i).getName().contains(disabledStrategy)) {
+				isDisabled = true;
+				break;
+			}
+		}
+		if (!isDisabled) {
+			filteredStrategies.add(strategyDirs.get(i));
+		}
+	}
+
 	public void execute(final int timeoutInMS) throws IOException, InterruptedException {
 		/* time stamp at the very beginning. */
 		long start = System.currentTimeMillis();
 
 		/* Collect all directories for strategies */
 		L.debug("Executing strategies in {}", this.executionEnvironment.getStrategyDirectory());
-		final File[] strategyDirectories = this.executionEnvironment.getStrategyDirectory().listFiles((f) -> f.isDirectory());
+		File[] strategyDirectories = this.executionEnvironment.getStrategyDirectory().listFiles(File::isDirectory);
 
 		if (strategyDirectories == null) {
-			throw new RuntimeException("Could not find any search strategy!! Canceling request.");
+			throw new PROSECORuntimeException("Could not find any search strategy!! Canceling request.");
 		}
 
 		if (L.isDebugEnabled()) {
 			L.debug("Found {} strategies: {}", strategyDirectories.length, Arrays.toString(strategyDirectories));
 		}
 
+		strategyDirectories = this.filterDisabledStrategies(strategyDirectories);
+		if (strategyDirectories.length == 0) {
+			throw new PROSECORuntimeException("Could not find any enabled strategy!! Canceling request.");
+		}
+
 		/* Setup a thread pool for observing the strategies. */
-		ExecutorService pool = Executors.newFixedThreadPool(strategyDirectories.length); // allow all to work in parallel
+		ExecutorService pool = Executors.newFixedThreadPool(strategyDirectories.length); // allow all to work in
+																							// parallel
 
 		int timeoutInSeconds = timeoutInMS / 1000;
 		timeoutInSeconds -= 10;
@@ -79,7 +125,9 @@ public class StrategyExecutor {
 			commandArguments[2] = this.executionEnvironment.getSearchInputDirectory().getAbsolutePath();
 			commandArguments[3] = outputPath.getAbsolutePath();
 			commandArguments[4] = "" + timeoutInSeconds;
-			new File(commandArguments[0]).setExecutable(true);
+			if (!new File(commandArguments[0]).setExecutable(true)) {
+				L.error("cannot set strategy command as executable");
+			}
 
 			/* organize log outputs */
 			ProcessBuilder pb = new ProcessBuilder(commandArguments);
@@ -112,7 +160,7 @@ public class StrategyExecutor {
 		L.debug("Time report\n\tTime to start schedule: {}\n\tTime to schedule: {}\n\tTime waiting for termination: {}", (preSchedule - start), (afterSchedule - preSchedule), (timeAfter - afterSchedule));
 
 		pool.shutdownNow();
-		pool.awaitTermination(1, TimeUnit.DAYS);
+		pool.awaitTermination(timeoutInSeconds, TimeUnit.SECONDS);
 		L.debug("Thread pool now is shut down.");
 	}
 
@@ -152,7 +200,7 @@ public class StrategyExecutor {
 							allOutputStream.write(outBytes, 0, outRead);
 						}
 					} catch (IOException e) {
-						e.printStackTrace();
+						L.error(e.getMessage());
 					}
 				}, "strategy-" + this.strategyName + "-stdout-listener");
 
@@ -166,11 +214,14 @@ public class StrategyExecutor {
 							allOutputStream.write(this.maskErrorStreamBytes(outRead, outBytes), 0, outRead + 8);
 						}
 					} catch (IOException e) {
-						e.printStackTrace();
+						L.error(e.getMessage());
 					}
 				}, "strategy-" + this.strategyName + "-stderr-listener");
 
-				/* wait for the process to terminate. When this happens, offer one ticket for the semaphore */
+				/*
+				 * wait for the process to terminate. When this happens, offer one ticket for
+				 * the semaphore
+				 */
 				t1.start();
 				t2.start();
 				p.waitFor();
@@ -181,12 +232,14 @@ public class StrategyExecutor {
 				t2.interrupt();
 				L.warn("Ready");
 			} catch (Exception e1) {
-				e1.printStackTrace();
+				L.error(e1.getMessage());
 			}
 		}
 
 		/**
-		 * Marks beginning and end of error stream lines with <b> $_( </b> and <b> )_$ </b>. To mark with these characters byte values of these characters are appended to beginning and end of the read bytes from the stream <br>
+		 * Marks beginning and end of error stream lines with <b> $_( </b> and <b> )_$
+		 * </b>. To mark with these characters byte values of these characters are
+		 * appended to beginning and end of the read bytes from the stream <br>
 		 * $ : 36 <br>
 		 * _ : 95 <br>
 		 * ( : 40 <br>
